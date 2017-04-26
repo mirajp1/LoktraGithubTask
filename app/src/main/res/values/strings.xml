@@ -3,4 +3,6 @@
     <string name="commit_message_label">Message:</string>
     <string name="commit_sha_label">SHA:</string>
     <string name="snackbar_pull_refresh_message">You can pull from top to refresh the list.</string>
+    <string name="no_internet_message">No internet  connection!</string>
+    <string name="api_limit_exceeded_error">Github API limit exceeded! Try again after some time.</string>
 </resources>

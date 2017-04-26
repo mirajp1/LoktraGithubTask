@@ -1,83 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="@dimen/commit_item_padding"
     android:background="@android:color/white"
     android:orientation="horizontal"
-    >
+    android:padding="@dimen/commit_item_padding">
 
     <ImageView
         android:id="@+id/avatarIV"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:scaleType="fitXY"
-        />
+        android:layout_width="@dimen/commit_item_image_size"
+        android:layout_height="@dimen/commit_item_image_size"
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        >
+        android:layout_marginStart="@dimen/commit_item_padding">
 
         <TextView
             android:id="@+id/committerNameTV"
+            style="@style/CommitItemName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/commitShaLabel"
-            android:layout_below="@id/committerNameTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/commit_sha_label"
-            />
+            android:layout_below="@id/committerNameTV"
+            android:text="@string/commit_sha_label" />
 
         <TextView
             android:id="@+id/commitShaTV"
-            android:layout_below="@id/committerNameTV"
-            android:layout_toRightOf="@id/commitShaLabel"
+            style="@style/CommitItemText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:maxLines="1"
-
-            />
+            android:layout_below="@id/committerNameTV"
+            android:layout_toEndOf="@id/commitShaLabel" />
 
 
         <TextView
             android:id="@+id/commitMessageLabel"
-            android:layout_below="@id/commitShaLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="@string/commit_message_label"
-            android:layout_alignParentLeft="true" />
+            android:layout_below="@id/commitShaLabel"
+            android:text="@string/commit_message_label" />
 
 
         <TextView
             android:id="@+id/commitMessageTV"
-            android:layout_below="@+id/commitShaLabel"
-            android:layout_toRightOf="@id/commitMessageLabel"
+            style="@style/CommitItemText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:maxLines="1"
+            android:layout_below="@+id/commitShaLabel"
+            android:layout_toEndOf="@+id/commitMessageLabel"
 
             />
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

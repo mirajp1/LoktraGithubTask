@@ -5,8 +5,7 @@
     android:id="@+id/swipeRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-
+    android:padding="@dimen/main_activity_padding"
     tools:context="com.miraj.loktragithubtask.MainActivity">
 
 
@@ -14,8 +13,6 @@
         android:id="@+id/commitsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:clipChildren="false"
         />
 
 </android.support.v4.widget.SwipeRefreshLayout>
