@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Loktra Github Task</string>
+    <string name="commit_message_label">Message:</string>
+    <string name="commit_sha_label">SHA:</string>
+    <string name="snackbar_pull_refresh_message">You can pull from top to refresh the list.</string>
+</resources>
