@@ -13,6 +13,16 @@ public class Commit implements Serializable {
     private String commitUrl;
     private Committer committer;
 
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
+    }
+
+    private boolean bookmarked;
+
     public String getSha() {
         return sha;
     }

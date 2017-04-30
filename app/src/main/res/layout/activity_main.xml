@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/main_activity_padding"
     tools:context="com.miraj.loktragithubtask.MainActivity">
-    
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/commitsList"
         android:layout_width="match_parent"

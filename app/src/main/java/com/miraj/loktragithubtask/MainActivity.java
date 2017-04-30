@@ -1,5 +1,6 @@
 package com.miraj.loktragithubtask;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecyclerView commitsList;
+    private CommitRVAdapter commitRVAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+
 
     private View rootView;
     @Override
@@ -79,6 +86,67 @@ public class MainActivity extends AppCompatActivity {
             Log.e(LOG_TAG,"no internet available");
             Snackbar.make(rootView,R.string.no_internet_message,Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+
+        MenuInflater menuInflater= getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main,menu);
+
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+
+            case R.id.favoritesAB:
+
+                if(commitRVAdapter!=null) {
+                    if (item.getTitle().equals(getString(R.string.menu_favorites_title))) {
+                        commitRVAdapter.getFilter().filter(Constants.FILTER_BOOKMARK);
+                        item.setTitle(R.string.menu_all_title);
+                    } else {
+                        commitRVAdapter.getFilter().filter(Constants.FILTER_ALL);
+                        item.setTitle(R.string.menu_favorites_title);
+                    }
+
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    private void setupList(List<Commit> commits){
+
+        SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS_NAME,MODE_PRIVATE);
+
+        for(Commit commit: commits){
+
+            if(sp.getBoolean(commit.getSha(),false)){
+                commit.setBookmarked(true);
+
+            }
+            else {
+                commit.setBookmarked(false);
+            }
+
+        }
+
+        commitRVAdapter = new CommitRVAdapter(commits,MainActivity.this);
+
+        commitsList.setAdapter(commitRVAdapter);
+
+
     }
 
     private class GetCommitsAsyncTask extends AsyncTask<Void,Void,List<Commit>>{
@@ -177,7 +245,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Commit> commits) {
 
-            commitsList.setAdapter(new CommitRVAdapter(commits,MainActivity.this));
+
+            setupList(commits);
             swipeRefreshLayout.setRefreshing(false);
         }
     }
