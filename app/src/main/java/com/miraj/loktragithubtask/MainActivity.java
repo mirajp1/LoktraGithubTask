@@ -4,10 +4,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,12 +38,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecyclerView commitsList;
     private CommitRVAdapter commitRVAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private SearchView searchView;
+
 
 
 
@@ -95,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater= getMenuInflater();
         menuInflater.inflate(R.menu.menu_main,menu);
 
+        MenuItem searchItem = menu.findItem(R.id.searchAB);
+
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnSearchClickListener(this);
+
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
         return true;
 
     }
@@ -147,6 +159,51 @@ public class MainActivity extends AppCompatActivity {
         commitsList.setAdapter(commitRVAdapter);
 
 
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        if(commitRVAdapter!=null) {
+            commitRVAdapter.getFilter().filter(query);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if(commitRVAdapter!=null) {
+            commitRVAdapter.getFilter().filter(newText);
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(searchView!=null && !searchView.isIconified()){
+            searchView.onActionViewCollapsed();
+
+            if(getSupportActionBar()!=null)
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+            if(commitRVAdapter!=null) {
+                commitRVAdapter.getFilter().filter(Constants.FILTER_ALL);
+            }
+
+        }else{
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private class GetCommitsAsyncTask extends AsyncTask<Void,Void,List<Commit>>{

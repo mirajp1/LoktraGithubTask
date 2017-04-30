@@ -7,4 +7,5 @@
     <string name="api_limit_exceeded_error">Github API limit exceeded! Try again after some time.</string>
     <string name="menu_favorites_title">Favorites</string>
     <string name="menu_all_title">All</string>
+    <string name="menu_title_search">Search</string>
 </resources>

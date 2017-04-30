@@ -4,7 +4,14 @@
 
     <item
         android:id="@+id/favoritesAB"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="@string/menu_favorites_title" />
+
+    <item
+        android:id="@+id/searchAB"
+        app:showAsAction="always"
+        android:title="@string/menu_title_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        />
 
 </menu>

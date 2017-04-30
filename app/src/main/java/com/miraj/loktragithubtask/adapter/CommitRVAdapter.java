@@ -28,14 +28,12 @@ public class CommitRVAdapter extends RecyclerView.Adapter<CommitRVAdapter.ViewHo
     private final List<Commit> originalValues;
     private final Context mContext;
     private final SharedPreferences sp;
-    private boolean shownAll;
 
     public CommitRVAdapter(List<Commit> items, Context context) {
         mValues = items;
         mContext=context;
-        sp=mContext.getSharedPreferences(Constants.SHARED_PREFS_NAME,mContext.MODE_PRIVATE);
+        sp=mContext.getSharedPreferences(Constants.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         originalValues = new ArrayList<>(mValues);
-        shownAll=true;
     }
 
     @Override
@@ -147,6 +145,25 @@ public class CommitRVAdapter extends RecyclerView.Adapter<CommitRVAdapter.ViewHo
 
                     filterResults.values=originalValues;
                     filterResults.count=originalValues.size();
+
+                }
+                else{
+
+                    List<Commit> newValues = new ArrayList<>();
+
+                    for(Commit commit: originalValues){
+
+                        if(commit.getCommitMessage().toUpperCase().contains(charSequence.toString().toUpperCase())
+                                || commit.getCommitter().getName().toUpperCase().contains(charSequence.toString().toUpperCase())
+                                ) {
+
+                            newValues.add(commit);
+
+                        }
+
+                    }
+                    filterResults.values = newValues;
+                    filterResults.count = newValues.size();
 
                 }
 
